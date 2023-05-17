@@ -39,21 +39,21 @@ const Landing = ({ setOnLanding }) => {
           >
             <motion.p
               variants={landingHover("up")}
-              className='text-white text-[100px] font-bold cursor-pointer flex ' 
+              className='text-white text-[90px] font-bold cursor-pointer flex ' 
               style={demobox}
             >
               Spez
             </motion.p>
             <motion.p 
               variants={landingHover("down")}
-              className='text-white text-[100px] font-bold cursor-pointer flex ' 
+              className='text-white text-[90px] font-bold cursor-pointer flex ' 
               style={demobox}
             >
               zare&nbsp;
             </motion.p>
           </motion.div>
           <p 
-            className='text-white text-[100px] font-bold cursor-pointer flex ' 
+            className='text-white text-[90px] font-bold cursor-pointer flex ' 
             style={demobox}
           >
             {suffixWords[suffixIndex]}
