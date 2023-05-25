@@ -6,7 +6,7 @@ import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { slideIn, textVariant } from "../utils/motion";
 
-const demomode = false;
+const demomode = true;
 const demobox = demomode ? styles.demo.navbar : {};
 
 const Navbar = () => {

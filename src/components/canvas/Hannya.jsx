@@ -13,9 +13,8 @@ const HannyaCanvas = () => {
 
   return (
     <Canvas shadows camera={{ position: [0, 0, 55], fov: 30 }}>
-      <color attach="background" args={[backgroundColor]} />
+      {/* <color attach="background" args={[backgroundColor]} /> */}
       <Suspense fallback={<CanvasLoader />}>        
-        
         <Hannya />
         <Environment preset="city" />
       </Suspense>
@@ -31,25 +30,27 @@ const Hannya = () => {
   const leftSidetLightRef = useRef();
   const rightSideLightRef = useRef();
 
-  const vecMaskPosition = new THREE.Vector3();
-  const vecTopLightPosition = new THREE.Vector3();
-  const vecSideLightPosition = new THREE.Vector3();
+  const cameraVector = new THREE.Vector3();
   let lerpPosX = 0;
-  let lerpPosZ = 0;
+  let lerpPosZ = -7;
   let lerpRotY = 0;
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    meshRef.current.rotation.x = Math.cos(t / 4) / 4;
-    meshRef.current.rotation.y = Math.sin(t / 2) / 8;
+    meshRef.current.rotation.x = -Math.cos(t / 2) / 6 + Math.PI/10;
+    meshRef.current.rotation.y = -Math.sin(t / 2) / 8;
 
-    if (state.mouse.x > 0.25) {
+    cameraVector.set(state.mouse.x * -5, state.mouse.y * -5, state.camera.position.z)
+    state.camera.position.lerp(cameraVector, 0.025)
+    state.camera.lookAt(0, 0, 0)
+
+    if (state.mouse.x > 0.30) {
       lerpPosX = -8;
       lerpPosZ = 10;
       lerpRotY = Math.PI/4
-    } else if (state.mouse.x < 0.25 && state.mouse.x > -0.25) {
+    } else if (state.mouse.x < 0.30 && state.mouse.x > -0.30) {
       lerpPosX = 0;
-      lerpPosZ = -5;
+      lerpPosZ = -7;
       lerpRotY = 0;
     } else {
       lerpPosX = 8;
@@ -57,9 +58,9 @@ const Hannya = () => {
       lerpRotY = -Math.PI/4
     }
 
-    groupRef.current.position.x = MathUtils.lerp(groupRef.current.position.x, lerpPosX, 0.025);
-    groupRef.current.position.z = MathUtils.lerp(groupRef.current.position.z, lerpPosZ, 0.025);
-    groupRef.current.rotation.y = MathUtils.lerp(groupRef.current.rotation.y, lerpRotY, 0.025)    
+    // groupRef.current.position.x = MathUtils.lerp(groupRef.current.position.x, lerpPosX, 0.025);
+    // groupRef.current.position.z = MathUtils.lerp(groupRef.current.position.z, lerpPosZ, 0.025);
+    // groupRef.current.rotation.y = MathUtils.lerp(groupRef.current.rotation.y, lerpRotY, 0.025)    
 
     const lightx = topLightRef.current.position.x + state.mouse.x * 1.25;
     const leftLighty = leftSidetLightRef.current.position.y + state.mouse.y * 0.5;
@@ -76,7 +77,7 @@ const Hannya = () => {
         ref={meshRef}
         scale={0.12}
         rotation={[0, 0, 0]}
-        position={[0, 0, -5]}>
+        position={[0, -2, -7]}>
         <primitive
           object={hannya.scene}          
         />
